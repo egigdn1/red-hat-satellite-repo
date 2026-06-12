@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  role_name: set_dns_ubuntu
+  author: egidijus
+  description: Configure DNS via systemd-resolved drop-in on Ubuntu
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+
+dependencies: []

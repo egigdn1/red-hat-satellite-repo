@@ -1,0 +1,40 @@
+---
+- name: Ensure systemd-resolved drop-in directory exists
+  ansible.builtin.file:
+    path: "{{ dns_dropin_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Deploy DNS drop-in configuration
+  ansible.builtin.copy:
+    dest: "{{ dns_dropin_dir }}/{{ dns_dropin_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      # Managed by Ansible — do not edit manually
+      [Resolve]
+      DNS={{ dns_primary }} {{ dns_secondary }}
+  become: true
+  notify: Restart systemd-resolved
+
+- name: Ensure systemd-resolved is enabled and running
+  ansible.builtin.service:
+    name: systemd-resolved
+    enabled: true
+    state: started
+  become: true
+
+- name: Verify DNS configuration
+  ansible.builtin.command:
+    cmd: resolvectl status
+  register: resolvectl_output
+  changed_when: false
+  become: true
+
+- name: Show resolvectl status
+  ansible.builtin.debug:
+    var: resolvectl_output.stdout_lines
