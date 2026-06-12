@@ -17,7 +17,7 @@
     content: |
       # Managed by Ansible — do not edit manually
       [Resolve]
-      DNS={{ dns_primary }} {{ dns_secondary }}
+      DNS={{ dns_primary }}{{ ' ' + dns_secondary if dns_secondary else '' }}
   become: true
   notify: Restart systemd-resolved
 
