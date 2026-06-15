@@ -1,0 +1,11 @@
+---
+- name: Update /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ set_hostname_hosts_ip | regex_escape }}\\s"
+    line: "{{ set_hostname_hosts_ip }}\t{{ set_hostname_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: set_hostname_manage_hosts | bool
