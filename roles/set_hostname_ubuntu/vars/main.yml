@@ -1,0 +1,4 @@
+---
+# No internal vars required for this role.
+# Tunable values live in defaults/main.yml so they can be overridden
+# from inventory or Red Hat Satellite host parameters.
