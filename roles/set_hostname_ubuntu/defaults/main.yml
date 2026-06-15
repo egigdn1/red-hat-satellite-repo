@@ -1,0 +1,10 @@
+---
+# Desired hostname for the target Ubuntu server.
+# Override this per-host (e.g. from Satellite host parameters / inventory).
+set_hostname_name: "ubuntu-server"
+
+# Manage /etc/hosts entry mapping 127.0.1.1 to the new hostname.
+set_hostname_manage_hosts: true
+
+# IP address used for the /etc/hosts mapping line.
+set_hostname_hosts_ip: "127.0.1.1"
