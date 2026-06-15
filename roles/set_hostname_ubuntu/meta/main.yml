@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  role_name: set_hostname_ubuntu
+  author: egidijus
+  description: Set the system hostname on Ubuntu via hostnamectl and /etc/hosts
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+
+dependencies: []
