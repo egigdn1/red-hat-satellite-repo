@@ -1,0 +1,29 @@
+---
+- name: Set the system hostname
+  ansible.builtin.hostname:
+    name: "{{ set_hostname_name }}"
+    use: systemd
+  become: true
+  notify: Update /etc/hosts
+
+- name: Ensure /etc/hosts maps loopback to the new hostname
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ set_hostname_hosts_ip | regex_escape }}\\s"
+    line: "{{ set_hostname_hosts_ip }}\t{{ set_hostname_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when: set_hostname_manage_hosts | bool
+
+- name: Verify the running hostname
+  ansible.builtin.command:
+    cmd: hostnamectl status
+  register: hostnamectl_output
+  changed_when: false
+  become: true
+
+- name: Show hostnamectl status
+  ansible.builtin.debug:
+    var: hostnamectl_output.stdout_lines
